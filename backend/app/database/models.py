@@ -1,5 +1,5 @@
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import DeclarativeBase, relationship
+from sqlalchemy import Column, Integer, String, ForeignKey
 
 
 class Base(DeclarativeBase):
@@ -14,6 +14,8 @@ class Academy(Base):
     city = Column(String, nullable=False)
     contact = Column(String, nullable=False)
 
+    players = relationship("Player", back_populates="academy")
+
 
 class Player(Base):
     __tablename__ = "players"
@@ -22,4 +24,7 @@ class Player(Base):
     full_name = Column(String, nullable=False)
     age = Column(Integer, nullable=False)
     position = Column(String, nullable=False)
-    academy_id = Column(Integer, nullable=False)
+
+    academy_id = Column(Integer, ForeignKey("academies.id"))
+
+    academy = relationship("Academy", back_populates="players")

@@ -29,3 +29,19 @@ def delete_player(db: Session, player_id: int):
         return {"message": "Player deleted successfully"}
 
     return {"message": "Player not found"}
+
+def update_player(db: Session, player_id: int, player):
+    db_player = db.query(Player).filter(Player.id == player_id).first()
+
+    if db_player:
+        db_player.full_name = player.full_name
+        db_player.age = player.age
+        db_player.position = player.position
+        db_player.academy_id = player.academy_id
+
+        db.commit()
+        db.refresh(db_player)
+
+        return db_player
+
+    return {"message": "Player not found"}

@@ -2,13 +2,15 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from app.database.connection import get_db
-from app.schemas.players import PlayerCreate
+from app.schemas.players import PlayerCreate, PlayerUpdate
 from app.crud.players import (
     create_player,
     get_players,
     get_player_by_id,
-    delete_player
+    delete_player,
+    update_player
 )
+
 router = APIRouter(
     prefix="/players",
     tags=["Players"]
@@ -27,3 +29,11 @@ def one_player(player_id: int, db: Session = Depends(get_db)):
 @router.delete("/{player_id}")
 def remove_player(player_id: int, db: Session = Depends(get_db)):
     return delete_player(db, player_id)
+
+@router.put("/{player_id}")
+def edit_player(
+    player_id: int,
+    player: PlayerUpdate,
+    db: Session = Depends(get_db)
+):
+    return update_player(db, player_id, player)
