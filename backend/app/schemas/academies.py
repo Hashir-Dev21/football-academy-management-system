@@ -11,3 +11,8 @@ class PlayerUpdate(BaseModel):
     age: int
     position: str
     academy_id: int
+
+class AcademyUpdate(BaseModel):
+    academy_name: str
+    city: str
+    contact: str
