@@ -1,8 +1,12 @@
 from fastapi import FastAPI
+
 from app.database.connection import engine
 from app.database.models import Base
+
 from app.routers.players import router as player_router
 from app.routers.academies import router as academy_router
+from app.routers.users import router as user_router
+
 
 app = FastAPI(
     title="Football Academy Management System API",
@@ -12,11 +16,14 @@ app = FastAPI(
 
 Base.metadata.create_all(bind=engine)
 
+
 @app.get("/")
 def home():
     return {
         "message": "Welcome to Football Academy Management System API"
     }
 
+
 app.include_router(player_router)
 app.include_router(academy_router)
+app.include_router(user_router)

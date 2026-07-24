@@ -28,3 +28,16 @@ class Player(Base):
     academy_id = Column(Integer, ForeignKey("academies.id"))
 
     academy = relationship("Academy", back_populates="players")
+
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String, unique=True, nullable=False)
+    email = Column(String, unique=True, nullable=False)
+    password = Column(String, nullable=False)
+
+    academy_id = Column(Integer, ForeignKey("academies.id"))
+
+    academy = relationship("Academy")
