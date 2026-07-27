@@ -38,6 +38,8 @@ class User(Base):
     email = Column(String, unique=True, nullable=False)
     password = Column(String, nullable=False)
 
+    role = Column(String, nullable=False, default="Player")
+
     academy_id = Column(Integer, ForeignKey("academies.id"))
 
     academy = relationship("Academy")

@@ -1,3 +1,9 @@
+from app.security.dependencies import (
+    get_current_user,
+    admin_required,
+    coach_required,
+    player_required
+)
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
@@ -42,7 +48,10 @@ def login(
         )
 
     access_token = create_access_token(
-        data={"sub": db_user.username}
+        data={
+            "sub": db_user.username,
+            "role": db_user.role
+        }
     )
 
     return {
@@ -55,5 +64,26 @@ def login(
 def get_me(current_user=Depends(get_current_user)):
     return {
         "message": "Authorized User",
+        "user": current_user
+    }
+
+@router.get("/admin")
+def admin_panel(current_user=Depends(admin_required)):
+    return {
+        "message": "Welcome Admin",
+        "user": current_user
+    }
+
+@router.get("/coach")
+def coach_panel(current_user=Depends(coach_required)):
+    return {
+        "message": "Welcome Coach",
+        "user": current_user
+    }
+
+@router.get("/player")
+def player_panel(current_user=Depends(player_required)):
+    return {
+        "message": "Welcome Player",
         "user": current_user
     }

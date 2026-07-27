@@ -10,6 +10,7 @@ def create_user(db: Session, user: UserCreate):
         username=user.username,
         email=user.email,
         password=hash_password(user.password),
+        role=user.role,
         academy_id=user.academy_id
     )
 
@@ -22,6 +23,7 @@ def create_user(db: Session, user: UserCreate):
 
 def get_users(db: Session):
     return db.query(User).all()
+
 
 def authenticate_user(db: Session, username: str, password: str):
     user = db.query(User).filter(User.username == username).first()
