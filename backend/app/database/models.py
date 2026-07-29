@@ -1,5 +1,5 @@
 from sqlalchemy.orm import DeclarativeBase, relationship
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, Float, ForeignKey
 
 
 class Base(DeclarativeBase):
@@ -43,3 +43,23 @@ class User(Base):
     academy_id = Column(Integer, ForeignKey("academies.id"))
 
     academy = relationship("Academy")
+
+
+class Fee(Base):
+    __tablename__ = "fees"
+
+    id = Column(Integer, primary_key=True, index=True)
+
+    player_id = Column(Integer, ForeignKey("players.id"))
+
+    month = Column(String, nullable=False)
+
+    amount = Column(Float, nullable=False)
+
+    due_date = Column(String, nullable=False)
+
+    status = Column(String, default="Unpaid")
+
+    voucher_no = Column(String, unique=True, nullable=False)
+
+    player = relationship("Player")
