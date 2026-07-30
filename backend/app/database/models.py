@@ -29,6 +29,8 @@ class Player(Base):
 
     academy = relationship("Academy", back_populates="players")
 
+    fees = relationship("Fee", back_populates="player")
+
 
 class User(Base):
     __tablename__ = "users"
@@ -62,4 +64,4 @@ class Fee(Base):
 
     voucher_no = Column(String, unique=True, nullable=False)
 
-    player = relationship("Player")
+    player = relationship("Player", back_populates="fees")  
