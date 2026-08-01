@@ -31,6 +31,11 @@ class Player(Base):
 
     fees = relationship("Fee", back_populates="player")
 
+    attendance = relationship(
+    "Attendance",
+    back_populates="player"
+)
+
 
 class User(Base):
     __tablename__ = "users"
@@ -65,3 +70,20 @@ class Fee(Base):
     voucher_no = Column(String, unique=True, nullable=False)
 
     player = relationship("Player", back_populates="fees")  
+
+
+class Attendance(Base):
+    __tablename__ = "attendance"
+
+    id = Column(Integer, primary_key=True, index=True)
+
+    player_id = Column(Integer, ForeignKey("players.id"))
+
+    date = Column(String, nullable=False)
+
+    status = Column(String, nullable=False)
+
+    player = relationship(
+        "Player",
+        back_populates="attendance"
+    )

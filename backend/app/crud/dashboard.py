@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 
-from app.database.models import Player, Fee, Academy
+from app.database.models import Player, Fee, Academy, Attendance
 
 
 def dashboard_stats(db: Session):
@@ -9,6 +9,8 @@ def dashboard_stats(db: Session):
     total_academies = db.query(Academy).count()
 
     total_players = db.query(Player).count()
+
+    total_attendance = db.query(Attendance).count()
 
     total_revenue = (
         db.query(func.sum(Fee.amount))
@@ -31,6 +33,7 @@ def dashboard_stats(db: Session):
     return {
         "total_academies": total_academies,
         "total_players": total_players,
+        "total_attendance": total_attendance,
         "total_revenue": total_revenue,
         "paid_fees": paid_fees,
         "unpaid_fees": unpaid_fees
@@ -57,6 +60,7 @@ def monthly_revenue(db: Session):
         for r in revenue
     ]
 
+
 def recent_payments(db: Session):
 
     payments = (
@@ -77,6 +81,7 @@ def recent_payments(db: Session):
         for payment in payments
     ]
 
+
 def recent_players(db: Session):
 
     players = (
@@ -94,4 +99,22 @@ def recent_players(db: Session):
             "age": player.age
         }
         for player in players
+    ]
+
+def recent_attendance(db: Session):
+
+    attendance = (
+        db.query(Attendance)
+        .order_by(Attendance.id.desc())
+        .limit(5)
+        .all()
+    )
+
+    return [
+        {
+            "player": record.player.full_name,
+            "date": record.date,
+            "status": record.status
+        }
+        for record in attendance
     ]
