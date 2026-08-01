@@ -1,3 +1,4 @@
+from app.routers.dashboard import router as dashboard_router
 from app.routers.fees import router as fee_router
 from fastapi import FastAPI
 
@@ -29,3 +30,4 @@ app.include_router(player_router)
 app.include_router(academy_router)
 app.include_router(user_router)
 app.include_router(fee_router)
+app.include_router(dashboard_router)
