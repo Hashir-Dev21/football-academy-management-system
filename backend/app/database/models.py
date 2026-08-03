@@ -1,6 +1,5 @@
 from sqlalchemy.orm import DeclarativeBase, relationship
-from sqlalchemy import Column, Integer, String, Float, ForeignKey
-
+from sqlalchemy import Column, Integer, String, Float, ForeignKey, Date
 
 class Base(DeclarativeBase):
     pass
@@ -87,3 +86,22 @@ class Attendance(Base):
         "Player",
         back_populates="attendance"
     )
+
+class Coach(Base):
+    __tablename__ = "coaches"
+
+    id = Column(Integer, primary_key=True, index=True)
+
+    full_name = Column(String, nullable=False)
+
+    age = Column(Integer)
+
+    specialization = Column(String)
+
+    experience = Column(Integer)
+
+    phone = Column(String)
+    
+    academy_id = Column(Integer, ForeignKey("academies.id"))
+
+    academy = relationship("Academy")
