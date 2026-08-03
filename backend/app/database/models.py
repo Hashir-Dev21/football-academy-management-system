@@ -1,5 +1,5 @@
-from sqlalchemy.orm import DeclarativeBase, relationship
 from sqlalchemy import Column, Integer, String, Float, ForeignKey, Date
+from sqlalchemy.orm import DeclarativeBase, relationship
 
 class Base(DeclarativeBase):
     pass
@@ -105,3 +105,21 @@ class Coach(Base):
     academy_id = Column(Integer, ForeignKey("academies.id"))
 
     academy = relationship("Academy")
+
+class Training(Base):
+    __tablename__ = "trainings"
+
+    id = Column(Integer, primary_key=True, index=True)
+
+    title = Column(String, nullable=False)
+
+    training_date = Column(Date, nullable=False)
+
+    training_time = Column(String, nullable=False)
+
+    location = Column(String)
+
+    coach_id = Column(Integer, ForeignKey("coaches.id"))
+
+
+    coach = relationship("Coach")

@@ -1,3 +1,4 @@
+from app.routers.training import router as training_router
 from app.routers.coach import router as coach_router
 from app.routers.attendance import router as attendance_router
 from app.routers.dashboard import router as dashboard_router
@@ -35,3 +36,4 @@ app.include_router(fee_router)
 app.include_router(dashboard_router)
 app.include_router(attendance_router)
 app.include_router(coach_router)
+app.include_router(training_router)
