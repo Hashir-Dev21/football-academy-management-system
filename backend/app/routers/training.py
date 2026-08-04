@@ -8,7 +8,10 @@ from app.crud.training import (
     get_trainings,
     get_training,
     update_training,
-    delete_training
+    delete_training,
+    get_coach_trainings,
+    get_upcoming_trainings,
+    get_today_trainings
 )
 
 router = APIRouter(
@@ -30,6 +33,27 @@ def all_trainings(
     db: Session = Depends(get_db)
 ):
     return get_trainings(db)
+
+
+@router.get("/coach/{coach_id}")
+def coach_trainings(
+    coach_id: int,
+    db: Session = Depends(get_db)
+):
+    return get_coach_trainings(db, coach_id)
+
+
+@router.get("/upcoming")
+def upcoming_trainings(
+    db: Session = Depends(get_db)
+):
+    return get_upcoming_trainings(db)
+
+@router.get("/today")
+def today_trainings(
+    db: Session = Depends(get_db)
+):
+    return get_today_trainings(db)
 
 
 @router.get("/{training_id}")

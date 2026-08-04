@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from datetime import date
 
 from app.database.models import Training
 from app.schemas.training import TrainingCreate
@@ -64,3 +65,28 @@ def delete_training(db: Session, training_id: int):
     return {
         "message": "Training deleted successfully"
     }
+
+def get_coach_trainings(db: Session, coach_id: int):
+
+    trainings = db.query(Training).filter(
+        Training.coach_id == coach_id
+    ).all()
+
+    return trainings
+
+from datetime import date
+
+
+def get_upcoming_trainings(db: Session):
+
+    return db.query(Training).filter(
+        Training.training_date >= date.today()
+    ).order_by(
+        Training.training_date
+    ).all()
+
+def get_today_trainings(db: Session):
+
+    return db.query(Training).filter(
+        Training.training_date == date.today()
+    ).all()
