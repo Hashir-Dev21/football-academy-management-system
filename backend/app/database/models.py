@@ -123,3 +123,16 @@ class Training(Base):
 
 
     coach = relationship("Coach")
+
+class Team(Base):
+    __tablename__ = "teams"
+
+    id = Column(Integer, primary_key=True, index=True)
+
+    team_name = Column(String, nullable=False)
+
+    age_group = Column(String)
+    
+    academy_id = Column(Integer, ForeignKey("academies.id"))
+
+    academy = relationship("Academy")
