@@ -26,7 +26,11 @@ class Player(Base):
 
     academy_id = Column(Integer, ForeignKey("academies.id"))
 
+    team_id = Column(Integer, ForeignKey("teams.id"), nullable=True)
+
     academy = relationship("Academy", back_populates="players")
+
+    team = relationship("Team", back_populates="players")
 
     fees = relationship("Fee", back_populates="player")
 
@@ -136,3 +140,5 @@ class Team(Base):
     academy_id = Column(Integer, ForeignKey("academies.id"))
 
     academy = relationship("Academy")
+
+    players = relationship("Player", back_populates="team")

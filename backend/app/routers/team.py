@@ -8,7 +8,9 @@ from app.crud.team import (
     get_teams,
     get_team,
     update_team,
-    delete_team
+    delete_team,
+    assign_player_to_team,
+    get_team_players
 )
 
 router = APIRouter(
@@ -54,3 +56,10 @@ def remove_team(
     db: Session = Depends(get_db)
 ):
     return delete_team(db, team_id)
+
+@router.get("/{team_id}/players")
+def team_players(
+    team_id: int,
+    db: Session = Depends(get_db)
+):
+    return get_team_players(db, team_id)
