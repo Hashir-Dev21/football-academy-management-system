@@ -1,3 +1,4 @@
+from app.routers.match import router as match_router
 from app.routers.team import router as team_router
 from app.routers.training import router as training_router
 from app.routers.coach import router as coach_router
@@ -39,3 +40,4 @@ app.include_router(attendance_router)
 app.include_router(coach_router)
 app.include_router(training_router)
 app.include_router(team_router)
+app.include_router(match_router)

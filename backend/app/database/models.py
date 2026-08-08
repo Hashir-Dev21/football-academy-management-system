@@ -142,3 +142,30 @@ class Team(Base):
     academy = relationship("Academy")
 
     players = relationship("Player", back_populates="team")
+
+class Match(Base):
+    __tablename__ = "matches"
+
+    id = Column(Integer, primary_key=True, index=True)
+
+    home_team_id = Column(Integer, ForeignKey("teams.id"))
+    away_team_id = Column(Integer, ForeignKey("teams.id"))
+
+    match_date = Column(String)
+    match_time = Column(String)
+    venue = Column(String)
+
+    home_score = Column(Integer, default=0)
+    away_score = Column(Integer, default=0)
+
+    status = Column(String, default="Scheduled")
+
+    home_team = relationship(
+        "Team",
+        foreign_keys=[home_team_id]
+    )
+
+    away_team = relationship(
+        "Team",
+        foreign_keys=[away_team_id]
+    )
